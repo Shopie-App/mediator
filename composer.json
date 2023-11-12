@@ -1,0 +1,19 @@
+{
+    "name": "shopie/mediator",
+    "description": "Essential mediator implementation",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Shopie\\Mediator\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Steve Armenakis",
+            "email": "support@shopie.gr"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
