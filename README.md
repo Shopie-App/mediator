@@ -4,7 +4,7 @@ Essential mediator implementation.
 
 ### Send a request and get a response back
 
-```
+```php
 // A message we want to send to a handler
 // Should extend Request class
 // Define the worker handler with the MediatorHandler attribute
@@ -46,7 +46,7 @@ MediatorResultStatus::SUCCESS
 
 ### Publish a message to a queue
 
-```
+```php
 // A message we want to send to a handler
 // Should extend Notification class
 // Define the worker handler with the MediatorHandler attribute
