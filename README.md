@@ -2,6 +2,8 @@
 
 Essential mediator implementation.
 
+Use Mediator when you want to handle communication between loosely coupled objects.
+
 ### Send a request and get a response back
 
 ```php
