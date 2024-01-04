@@ -10,8 +10,8 @@
     },
     "authors": [
         {
-            "name": "Steve Armenakis",
-            "email": "support@shopie.gr"
+            "name": "Shopie",
+            "email": "dev@shopie.gr"
         }
     ],
     "minimum-stability": "stable",
