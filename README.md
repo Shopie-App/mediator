@@ -4,6 +4,12 @@ Essential mediator implementation.
 
 Use Mediator when you want to handle communication between loosely coupled objects.
 
+## Installation
+
+```json
+php composer require shopie/mediator
+```
+
 ### Send a request and get a response back
 
 ```php
@@ -13,8 +19,16 @@ Use Mediator when you want to handle communication between loosely coupled objec
 #[MediatorHandler(RequestNotificationHandler::class)]
 class RequestNotification extends Request
 {
-    public function __construct()
+    public function __construct(
+        private int $id,
+        private string $name,
+        private bool $isActive
+    ) {
+    }
+
+    public function isActive(): bool
     {
+        return $this->isActive;
     }
 }
 
@@ -28,11 +42,17 @@ class RequestNotificationHandler
 
     public function handle(RequestNotification $notification): MediatorResult
     {
-        //...do work
+        // example error return
+        if (!$notification->isActive()) {
+            return new MediatorResult('User is not activated');
+        }
+
+        // ...do work
 
         // return result
         // 1st argument: error string, 2nd argument: result object
-        return new MediatorResult(null, null);
+        // result object can be anything
+        return new MediatorResult(null, true);
     }
 }
 
@@ -77,4 +97,71 @@ class TestMessageHandler
 
 // init Mediator, publish message
  (new Mediator())->publish(new TestMessage(1, 'This is a test notification'));
+```
+
+### Injecting dependencies to handlers
+
+Use [shopie/di-container](https://github.com/Shopie-App/di-container) IoC container if you want to inject dependencies to handlers.
+
+```php
+// Prototype example container initialization in an App class
+class App
+{
+    /**
+     * Services are added to the container.
+     */
+    private ServiceContainerInterface $container;
+
+    /**
+     * Services are requested from provider.
+     */
+    private ServiceProviderInterface $provider;
+
+    public function __construct()
+    {
+    }
+
+    public function initContainer()
+    {
+        $collection = new ServiceCollection();
+
+        $this->container = new ServiceContainer($collection);
+
+        $this->provider = new ServiceProvider($collection);
+    }
+
+    public function addServices()
+    {
+        // add mediator to container
+        $this->container->addScoped(MediatorInterface::class, Mediator::class);
+
+        // init mediator
+        $mediator = $this->provider->getService(Mediator::class);
+
+        // add service provider to mediator
+        $mediator->setServiceProvider($this->provider);
+    }
+}
+
+// Using the App class
+$app = new App();
+$app->addServices();
+```
+
+Now objects can be injected to the handlers. 
+
+```php
+// A handler with dependencies
+class TestMessageHandler
+{
+    public function __construct(private MyRepository $repository)
+    {
+    }
+
+    public function handle(TestMessage $notification): void
+    {
+        // do work
+        $this->repository->add($notification);
+    }
+}
 ```
