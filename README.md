@@ -145,6 +145,7 @@ class App
 
 // Using the App class
 $app = new App();
+$app->initContainer();
 $app->addServices();
 ```
 
