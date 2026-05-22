@@ -15,8 +15,9 @@ interface MediatorInterface
      * @link https://github.com/Shopie-App/di-container Compatible with Shopie DI Container.
      * 
      * @param ServiceProviderInterface $serviceProvider Provider interface.
+     * @return MediatorInterface Returns self.
      */
-    public function setServiceProvider(ServiceProviderInterface $serviceProvider): void;
+    public function setServiceProvider(ServiceProviderInterface $serviceProvider): MediatorInterface;
 
     /**
      * Send a request to an object and get a response back.

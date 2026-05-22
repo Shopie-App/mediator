@@ -18,9 +18,11 @@ class Mediator implements MediatorInterface
     {
     }
 
-    public function setServiceProvider(ServiceProviderInterface $serviceProvider): void
+    public function setServiceProvider(ServiceProviderInterface $serviceProvider): MediatorInterface
     {
         $this->serviceProvider = $serviceProvider;
+
+        return $this;
     }
 
     public function send(RequestInterface $command): MediatorResult
