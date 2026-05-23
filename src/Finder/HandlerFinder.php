@@ -80,8 +80,12 @@ class HandlerFinder implements HandlerFinderInterface
         
     }
 
-    public function initConstructorParameters(\ReflectionMethod $constructor): array
+    public function initConstructorParameters(?\ReflectionMethod $constructor): array
     {
+        if ($constructor === null) {
+            return [];
+        }
+
         // get constructor params
         $params = $constructor->getParameters();
         
