@@ -12,7 +12,7 @@ use Shopie\Mediator\Finder\HandlerFinder;
 
 class Mediator implements MediatorInterface
 {
-    private ServiceProviderInterface $serviceProvider;
+    private ?ServiceProviderInterface $serviceProvider = null;
 
     public function __construct()
     {

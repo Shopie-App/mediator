@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopie\Mediator\Finder;
 
 use ReflectionClass;
+use ReflectionNamedType;
 use Shopie\DiContainer\Contracts\ServiceProviderInterface;
 use Shopie\Mediator\Attributes\MediatorHandler;
 use Shopie\Mediator\Contracts\HandlerFinderInterface;
@@ -16,7 +17,6 @@ use Shopie\Mediator\MediatorResult;
 
 class HandlerFinder implements HandlerFinderInterface
 {
-    //private ReflectionClass $reflectedHandler;
     private NotificationInterface|RequestInterface $message;
 
     private string $handlerClassName;
@@ -30,7 +30,6 @@ class HandlerFinder implements HandlerFinderInterface
         $this->message = $object;
 
         // introspect message class
-        //$reflector = new \ReflectionClass($object);
         $reflector = new ReflectionClass($object);
 
         // get handler attribute
@@ -97,12 +96,13 @@ class HandlerFinder implements HandlerFinderInterface
         $dependencies = [];
         
         foreach ($params as $param) {
-
-            /** @var ReflectionNamedType $type */
             $type = $param->getType();
 
-            $dependencies[] = !$type->isBuiltin() && !$param->isDefaultValueAvailable() 
-            ? $this->serviceProvider->getService($type->getName()) : $param->getDefaultValue();
+            if ($type instanceof ReflectionNamedType && !$type->isBuiltin() && !$param->isDefaultValueAvailable()) {
+                $dependencies[] = $this->serviceProvider?->getService($type->getName());
+            } else {
+                $dependencies[] = $param->isDefaultValueAvailable() ? $param->getDefaultValue() : null;
+            }
         }
 
         return $dependencies;

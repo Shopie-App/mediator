@@ -16,14 +16,14 @@ class MediatorResult
         private ?string $error,
         private mixed $result = null
     ) {
-        if ($error == '') {
+        if ($error === null || $error === '') {
             $this->status = MediatorResultStatus::SUCCESS;
         } else {
             $this->status = MediatorResultStatus::FAILED;
         }
     }
 
-    public function error(): string
+    public function error(): ?string
     {
         return $this->error;
     }
