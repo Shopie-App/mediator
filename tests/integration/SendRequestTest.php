@@ -16,7 +16,7 @@ use Shopie\Mediator\Request;
 
 final class SendRequestTest extends TestCase
 {
-    /*public function testSendRequestNoHandlerException(): void
+    public function testSendRequestNoHandlerException(): void
     {
         // init mediator
         $mediator = new Mediator();
@@ -56,7 +56,7 @@ final class SendRequestTest extends TestCase
         $this->assertSame(MediatorResultStatus::SUCCESS, $result->status);
         $this->assertSame(50, $result->result()->id);
         $this->assertSame('my_username', $result->result()->username);
-    }*/
+    }
 
     public function testSendRequestWithDi(): void
     {
