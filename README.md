@@ -6,8 +6,8 @@ Use Mediator when you want to handle communication between loosely coupled objec
 
 ## Installation
 
-```json
-php composer require shopie/mediator
+```bash
+composer require shopie/mediator
 ```
 
 ### Send a request and get a response back
@@ -57,7 +57,7 @@ class RequestNotificationHandler
 }
 
 // init Mediator, send message, get result back
-$result = (new Mediator())->send(new RequestNotification());
+$result = (new Mediator())->send(new RequestNotification(1, 'John', true));
 
 // check $result->status
 // failed equals:
@@ -136,7 +136,7 @@ class App
         $this->container->addScoped(MediatorInterface::class, Mediator::class);
 
         // init mediator
-        $mediator = $this->provider->getService(Mediator::class);
+        $mediator = $this->provider->getService(MediatorInterface::class);
 
         // add service provider to mediator
         $mediator->setServiceProvider($this->provider);
