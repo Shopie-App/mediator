@@ -19,6 +19,6 @@
         "php": "^8.2 || ^8.3 || ^8.4"
     },
     "require-dev": {
-        "shopie/di-container": "^1.0"
+        "shopie/di-container": "^2.0"
     }
 }
